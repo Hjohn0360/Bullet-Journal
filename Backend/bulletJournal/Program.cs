@@ -1,5 +1,7 @@
 using MongoDB.Driver;
 using MongoDB.Bson;
+using Backend.bulletJournal.Models;
+using Backend.bulletJournal.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,8 +20,10 @@ builder.Services.AddSingleton<IMongoClient>(_ => new MongoClient(settings));
 builder.Services.AddScoped(sp => 
 {
     var client = sp.GetRequiredService<IMongoClient>();
-    return client.GetDatabase("bulletJournal"); // Replace with your database name
+    return client.GetDatabase("Cluster0"); // Replace with your database name
 });
+
+builder.Services.AddScoped<UserService>();
 
 // Add Swagger services
 builder.Services.AddEndpointsApiExplorer();
