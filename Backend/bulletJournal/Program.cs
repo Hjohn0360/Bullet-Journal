@@ -2,15 +2,20 @@ using MongoDB.Driver;
 using MongoDB.Bson;
 using Backend.bulletJournal.Models;
 using Backend.bulletJournal.Services;
+using DotNetEnv;
+
+Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
+
+var connectionString = Environment.GetEnvironmentVariable("MONGODB_CONNECTION_STRING");
+var databaseName = Environment.GetEnvironmentVariable("MONGODB_NAME");
 
 // Add services to the container.
 builder.Services.AddControllers();
 
 // Configure MongoDB
-const string connectionUri = "mongodb+srv://hjohnfitz306:Int3r3ssantW04nung@cluster0.wwse2qd.mongodb.net/";
-var settings = MongoClientSettings.FromConnectionString(connectionUri);
+var settings = MongoClientSettings.FromConnectionString(connectionString);
 settings.ServerApi = new ServerApi(ServerApiVersion.V1);
 
 // Register MongoDB client
@@ -20,10 +25,13 @@ builder.Services.AddSingleton<IMongoClient>(_ => new MongoClient(settings));
 builder.Services.AddScoped(sp => 
 {
     var client = sp.GetRequiredService<IMongoClient>();
-    return client.GetDatabase("Cluster0"); // Replace with your database name
+    return client.GetDatabase(databaseName); // Replace with your database name
 });
 
+// NOTE -- The services being registered
 builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<QuestionService>();
+builder.Services.AddScoped<AnswerService>();
 
 // Add Swagger services
 builder.Services.AddEndpointsApiExplorer();

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Backend.bulletJournal.Models; 
 using Backend.bulletJournal.Services;
-// Remove this unnecessary self-reference
-// using Backend.bulletJournal.Controllers;
+using Microsoft.AspNetCore.Authorization;
+using System.Transactions;
+
 
 namespace Backend.bulletJournal.Controllers{
     [ApiController]
@@ -14,13 +15,14 @@ namespace Backend.bulletJournal.Controllers{
         public UserController(UserService userService){
             _userService = userService;
         }
+        private string GetCurrentUserId(){
+            return User.FindFirst("id")?.Value ?? string.Empty;
+        }
 
         [HttpGet]
         public async Task<ActionResult<List<User>>> Get() 
-            // Remove the 'return' keyword here - it's not valid with the lambda syntax
             => await _userService.GetAsync();
         
-        // Fix the attribute syntax - missing comma
         [HttpGet("{id:length(24)}")]
         public async Task<ActionResult<User>> Get(string id){
             var user = await _userService.GetAsync(id);
@@ -93,7 +95,6 @@ namespace Backend.bulletJournal.Controllers{
             return NoContent();
         }
         
-        // Fix the attribute syntax - remove space after colon
         [HttpDelete("{id:length(24)}")]
         public async Task<IActionResult> Delete(string id){
             var user = await _userService.GetAsync(id);
@@ -104,6 +105,33 @@ namespace Backend.bulletJournal.Controllers{
             await _userService.RemoveAsync(id);
 
             return NoContent();
+        }
+
+        [HttpGet("admin/users")]
+        [Authorize]
+        public async Task<ActionResult<List<User>>> GetAllUsersForAdmin(){
+            var currentUserId = GetCurrentUserId();
+            var isAdmin = await _userService.IsUserAdminAsync(currentUserId);
+
+            if(!isAdmin){
+                Forbid();
+            }
+
+            return await _userService.GetAsync();
+        }
+
+        [HttpPost("admin/promote/{userId}")]
+        [Authorize]
+        public async Task<IActionResult> PromoteUserToAdmin(string userId){
+            var currentUserId = GetCurrentUserId();
+            var isAdmin = await _userService.IsUserAdminAsync(currentUserId);
+
+            if(!isAdmin){
+                Forbid();
+            }
+
+            await _userService.PromoteToAdminAsync(userId);
+            return Ok();
         }
     }
 
