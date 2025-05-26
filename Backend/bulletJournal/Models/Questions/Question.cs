@@ -9,6 +9,9 @@ namespace Backend.bulletJournal.Models{
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string? Id { get; set; } 
+        
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string? UserId { get; set; } 
         public string Type { get; set; } = string.Empty;
         public string Options { get; set; } = string.Empty;
         public string Text { get; set; } = string.Empty;

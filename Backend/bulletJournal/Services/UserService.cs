@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Runtime.InteropServices;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using System.ComponentModel;
 
 namespace Backend.bulletJournal.Services{
     public class UserService{
@@ -26,7 +27,15 @@ namespace Backend.bulletJournal.Services{
 
         public async Task<User> GetByEmailAsync(string email) =>
             await _user.Find(u => u.Email == email).FirstOrDefaultAsync();
+        
+        public async Task<User?> GetUserByIdAsync(string userId){
+            return await _user.Find(u => u.Id == userId).FirstOrDefaultAsync();
+        }
 
+        public async Task<bool> IsUserValidAsync(string userId){
+            var user = await GetUserByIdAsync(userId);
+            return user != null;
+        }
         public async Task<User> CreateAsync(User user)
         {
             // NOTE -- Generates salt and hash password
