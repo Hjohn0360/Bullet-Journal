@@ -22,32 +22,31 @@ const RegisterForm: React.FC = () => {
       ...formData,
       [e.target.name]: e.target.value
     });
-    setError(''); // Clear error when user starts typing
+    setError('');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
-
-    // Validation
+  
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
       setIsLoading(false);
       return;
     }
-
+  
     if (formData.password.length < 6) {
       setError('Password must be at least 6 characters long');
       setIsLoading(false);
       return;
     }
-
+  
     try {
       const success = await register({
         username: formData.username,
         email: formData.email,
-        passwordHash: formData.password, // Will be hashed by backend
+        passwordHash: formData.password,
         firstName: formData.firstName,
         lastName: formData.lastName,
         userRole: 'User',
@@ -60,9 +59,14 @@ const RegisterForm: React.FC = () => {
           timeZone: 'CDT'
         }
       });
-
+  
       if (success) {
-        navigate('/dashboard');
+        navigate('/login', { 
+          state: { 
+            message: 'Account created successfully! Please sign in with your new account.',
+            username: formData.username // NOTE -- Pre-fill username
+          } 
+        });
       } else {
         setError('Registration failed. Username or email may already exist.');
       }

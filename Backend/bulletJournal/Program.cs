@@ -14,6 +14,17 @@ var databaseName = Environment.GetEnvironmentVariable("MONGODB_NAME");
 // Add services to the container.
 builder.Services.AddControllers();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials();
+    });
+});
+
 // Configure MongoDB
 var settings = MongoClientSettings.FromConnectionString(connectionString);
 settings.ServerApi = new ServerApi(ServerApiVersion.V1);
@@ -45,6 +56,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("AllowReactApp");
 
 app.UseHttpsRedirection();
 app.UseAuthorization();

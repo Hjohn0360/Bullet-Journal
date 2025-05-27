@@ -51,28 +51,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const register = async (userData: RegisterRequest): Promise<boolean> => {
-    setLoading(true);
-    try {
-      const result = await authService.register(userData);
-      if (result.success && result.user) {
-        // After registration, automatically log them in
-        const loginResult = await authService.login({
-          username: userData.username,
-          password: userData.passwordHash
-        });
-        if (loginResult.success && loginResult.user) {
-          setUser(loginResult.user);
-          return true;
-        }
-      }
-      return false;
-    } catch (error) {
-      console.error('Registration failed:', error);
-      return false;
-    } finally {
-      setLoading(false);
+  setLoading(true);
+  try {
+    const result = await authService.register(userData);
+    if (result.success) {
+      return true;
     }
-  };
+    return false;
+  } catch (error) {
+    console.error('Registration failed:', error);
+    return false;
+  } finally {
+    setLoading(false);
+  }
+};
 
   const logout = () => {
     authService.logout();

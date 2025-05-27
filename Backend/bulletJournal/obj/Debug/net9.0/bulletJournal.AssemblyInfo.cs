@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("bulletJournal")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3ef073d11a546ab3d6fc97f9c574ba882e0a5378")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d67068288929fabb793f7e6a22cc6c318f69f0fb")]
 [assembly: System.Reflection.AssemblyProductAttribute("bulletJournal")]
 [assembly: System.Reflection.AssemblyTitleAttribute("bulletJournal")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
