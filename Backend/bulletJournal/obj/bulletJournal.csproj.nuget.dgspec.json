@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/johnnharris/Documents/Kennedy's Bullet Journal/Backend/bulletJournal/bulletJournal.csproj": {}
+    "/Users/johnnharris/Documents/The Real Bullet Journal/Bullet-Journal/Backend/bulletJournal/bulletJournal.csproj": {}
   },
   "projects": {
-    "/Users/johnnharris/Documents/Kennedy's Bullet Journal/Backend/bulletJournal/bulletJournal.csproj": {
+    "/Users/johnnharris/Documents/The Real Bullet Journal/Bullet-Journal/Backend/bulletJournal/bulletJournal.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/johnnharris/Documents/Kennedy's Bullet Journal/Backend/bulletJournal/bulletJournal.csproj",
+        "projectUniqueName": "/Users/johnnharris/Documents/The Real Bullet Journal/Bullet-Journal/Backend/bulletJournal/bulletJournal.csproj",
         "projectName": "bulletJournal",
-        "projectPath": "/Users/johnnharris/Documents/Kennedy's Bullet Journal/Backend/bulletJournal/bulletJournal.csproj",
+        "projectPath": "/Users/johnnharris/Documents/The Real Bullet Journal/Bullet-Journal/Backend/bulletJournal/bulletJournal.csproj",
         "packagesPath": "/Users/johnnharris/.nuget/packages/",
-        "outputPath": "/Users/johnnharris/Documents/Kennedy's Bullet Journal/Backend/bulletJournal/obj/",
+        "outputPath": "/Users/johnnharris/Documents/The Real Bullet Journal/Bullet-Journal/Backend/bulletJournal/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/johnnharris/.nuget/NuGet/NuGet.Config"
