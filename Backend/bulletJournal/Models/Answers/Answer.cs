@@ -17,11 +17,11 @@ namespace Backend.bulletJournal.Models{
         public string UserId { get; set; } = string.Empty;
         public string answerText { get; set; } = string.Empty;
         public string answerType { get; set; } = string.Empty;
-        public DateOnly answerDate { get; set; }
+        public DateTime answerDate { get; set; } = DateTime.UtcNow;
         public string? selectedOption { get; set; }
         public int rating { get; set; }
         // NOTE -- For yes or no questions
         public bool answerValue { get; set; }
-        // TODO -- Add time of when question was answered
+        public DateTime answerTime { get; set; } = DateTime.UtcNow;
     }
 }

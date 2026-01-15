@@ -7,6 +7,9 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import DashboardPage from './pages/DashBoardPage';
 import './App.css';
+import QuestionManagement from './components/admin/QuestionManagement';
+import ViewResponses from './components/admin/ViewResponses';
+import UserManagement from './components/admin/UserManagement';
 
 // Protected Route Component
 interface ProtectedRouteProps {
@@ -76,6 +79,33 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <DashboardPage />
+          </ProtectedRoute>
+        } 
+      />
+
+      <Route 
+        path="/admin/questions" 
+        element={
+          <ProtectedRoute>
+            <QuestionManagement />
+          </ProtectedRoute>
+        } 
+      />
+
+      <Route 
+        path="/admin/responses" 
+        element={
+          <ProtectedRoute>
+            <ViewResponses />
+          </ProtectedRoute>
+        } 
+      />
+
+      <Route 
+        path="/admin/users" 
+        element={
+          <ProtectedRoute>
+            <UserManagement />
           </ProtectedRoute>
         } 
       />

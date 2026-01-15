@@ -1,9 +1,11 @@
 import React from 'react';
 import { useAuth } from '../hooks/useAuth';
 import Layout from '../components/common/Layout';
+import { useNavigate } from 'react-router-dom';
 
 const DashboardPage: React.FC = () => {
   const { user, isAdmin } = useAuth();
+  const navigate = useNavigate();
 
   if (!user) {
     return <div>Loading...</div>;
@@ -28,7 +30,7 @@ const DashboardPage: React.FC = () => {
               <div className="dashboard-card">
                 <h3>Question Management</h3>
                 <p>Create, edit, and manage questions for users to answer.</p>
-                <button className="btn-primary">
+                <button className="btn-primary" onClick={() => navigate('/admin/questions')}>
                   Manage Questions
                 </button>
               </div>
@@ -36,7 +38,7 @@ const DashboardPage: React.FC = () => {
               <div className="dashboard-card">
                 <h3>User Responses</h3>
                 <p>View and analyze user responses to questions.</p>
-                <button className="btn-secondary">
+                <button className="btn-secondary" onClick={() => navigate('/admin/responses')}>
                   View Responses
                 </button>
               </div>
@@ -44,7 +46,7 @@ const DashboardPage: React.FC = () => {
               <div className="dashboard-card">
                 <h3>User Management</h3>
                 <p>Manage user accounts and permissions.</p>
-                <button className="btn-secondary">
+                <button className="btn-secondary" onClick={() => navigate('/admin/users')}>
                   Manage Users
                 </button>
               </div>
