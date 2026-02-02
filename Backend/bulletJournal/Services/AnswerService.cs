@@ -15,12 +15,30 @@ namespace Backend.bulletJournal.Services{
 
             public async Task<List<Answer>> GetAsync() =>
                 await _answer.Find(_ => true).ToListAsync();
+
             public async Task<Answer?> GetAsync(string id) =>
                 await _answer.Find(x => x.Id == id).FirstOrDefaultAsync();
+            
+            public async Task<Answer?> GetUserIdAndQuestionIdAndDateAsync(string userId, string questionId, DateTime date){
+                return await _answer.Find(a =>
+                    a.UserId == userId &&
+                    a.QuestionId == questionId &&
+                    a.AnswerDate.Date == date.Date
+                ).FirstOrDefaultAsync();
+            }
+
+            public async Task<List<Answer>> GetAllInfoAsync(){
+                return await _answer.Find(_ => true)
+                .SortByDescending(a => a.AnswerDate)
+                .ToListAsync();
+            }
+
             public async Task CreateAsync(Answer newAnswer) =>
                 await _answer.InsertOneAsync(newAnswer);
+
             public async Task UpdateAsync(string id, Answer updatedAnswer) =>
                 await _answer.ReplaceOneAsync(x => x.Id == id, updatedAnswer);
+
             public async Task RemoveAsync(string id) =>
                 await _answer.DeleteOneAsync(x => x.Id == id);
             

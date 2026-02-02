@@ -16,6 +16,7 @@ const QuestionManagement: React.FC = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [editingQuestion, setEditingQuestion] = useState<Question | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [viewingQuestion, setViewingQuestion] = useState<Question | null>(null); // NEW: For viewing full question
 
   const navigate = useNavigate();
 
@@ -91,12 +92,17 @@ const QuestionManagement: React.FC = () => {
     });
   };
 
-  const startEdit = (question: Question) => {
+  const startEdit = (question: Question, event: React.MouseEvent) => {
+    event.stopPropagation(); // Prevent card click
     setEditingQuestion(question);
     setQuestionForm({
       questionText: question.questionText,
       isActive: question.isActive,
     });
+  };
+
+  const handleCardClick = (question: Question) => {
+    setViewingQuestion(question);
   };
 
   // Filter questions based on search
@@ -135,7 +141,11 @@ const QuestionManagement: React.FC = () => {
         ) : (
           <div className="questions-grid">
             {filteredQuestions.map((question) => (
-              <div key={question.id} className="question-card">
+              <div 
+                key={question.id} 
+                className="question-card"
+                onClick={() => handleCardClick(question)}
+              >
                 <div className="question-header">
                   <span className={`status-badge ${question.isActive ? 'active' : 'inactive'}`}>
                     {question.isActive ? 'Active' : 'Inactive'}
@@ -152,12 +162,15 @@ const QuestionManagement: React.FC = () => {
                   )}
                 </div>
 
-                <div className="question-actions">
-                  <button onClick={() => startEdit(question)} className="btn-edit">
+                <div className="question-actions" onClick={(e) => e.stopPropagation()}>
+                  <button onClick={(e) => startEdit(question, e)} className="btn-edit">
                     Edit
                   </button>
                   <button 
-                    onClick={() => handleDeleteQuestion(question.id!)} 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDeleteQuestion(question.id!);
+                    }} 
                     className="btn-delete"
                   >
                     Delete
@@ -174,6 +187,64 @@ const QuestionManagement: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* View Question Modal */}
+      {viewingQuestion && (
+        <div className="modal-overlay" onClick={() => setViewingQuestion(null)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>Question Details</h2>
+              <button 
+                onClick={() => setViewingQuestion(null)}
+                className="btn-close"
+              >
+                ×
+              </button>
+            </div>
+
+            <div className="modal-content">
+              <div className="view-question-status">
+                <span className={`status-badge ${viewingQuestion.isActive ? 'active' : 'inactive'}`}>
+                  {viewingQuestion.isActive ? 'Active' : 'Inactive'}
+                </span>
+              </div>
+              
+              <div className="view-question-text">
+                <h3>Question:</h3>
+                <p>{viewingQuestion.questionText}</p>
+              </div>
+
+              {viewingQuestion.createdDate && (
+                <div className="view-question-date">
+                  <strong>Created:</strong> {new Date(viewingQuestion.createdDate).toLocaleDateString()}
+                </div>
+              )}
+            </div>
+
+            <div className="modal-actions">
+              <button 
+                onClick={() => setViewingQuestion(null)}
+                className="btn-secondary"
+              >
+                Close
+              </button>
+              <button 
+                onClick={() => {
+                  setViewingQuestion(null);
+                  setEditingQuestion(viewingQuestion);
+                  setQuestionForm({
+                    questionText: viewingQuestion.questionText,
+                    isActive: viewingQuestion.isActive,
+                  });
+                }}
+                className="btn-primary"
+              >
+                Edit Question
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Create/Edit Modal */}
       {(showCreateModal || editingQuestion) && (

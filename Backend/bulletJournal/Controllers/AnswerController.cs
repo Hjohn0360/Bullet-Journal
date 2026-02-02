@@ -53,6 +53,21 @@ namespace Backend.bulletJournal.Controllers{
                     return Forbid("Admins cannot create answer questions, only Regular Users can.");
                 }
                 newAnswer.UserId = currentUserId;
+                newAnswer.AnswerDate = DateTime.UtcNow.Date;
+                newAnswer.AnswerTime = DateTime.UtcNow.ToString("HH:mm:ss");
+
+                var existingAnswer = await _answerService.GetUserIdAndQuestionIdAndDateAsync(
+                    currentUserId,
+                    newAnswer.QuestionId,
+                    newAnswer.AnswerDate
+                );
+
+                if (existingAnswer != null){
+                    return BadRequest(new {
+                        message = "You have already answered this question, please try again tomorrow or edit existing answer.",
+                        existingAnswerId = existingAnswer.Id
+                    });
+                }
                 await _answerService.CreateAsync(newAnswer);
                 return CreatedAtAction(nameof(Get), new { id = newAnswer.Id }, newAnswer);
             }

@@ -18,7 +18,7 @@ const Header: React.FC = () => {
       <div className="header-content">
         <div className="header-left">
           <h1 onClick={() => navigate('/dashboard')} className="logo">
-            Bullet Journal
+            Kennedy's Bullet Journal
           </h1>
         </div>
         

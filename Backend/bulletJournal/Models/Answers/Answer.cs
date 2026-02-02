@@ -15,13 +15,13 @@ namespace Backend.bulletJournal.Models{
 
         [BsonRepresentation(BsonType.ObjectId)]
         public string UserId { get; set; } = string.Empty;
-        public string answerText { get; set; } = string.Empty;
-        public string answerType { get; set; } = string.Empty;
-        public DateTime answerDate { get; set; } = DateTime.UtcNow;
-        public string? selectedOption { get; set; }
-        public int rating { get; set; }
+        public string AnswerText { get; set; } = string.Empty;
+        public string AnswerType { get; set; } = string.Empty;
+        public DateTime AnswerDate { get; set; } = DateTime.UtcNow;
+        public string? SelectedOption { get; set; }
+        public int Rating { get; set; }
         // NOTE -- For yes or no questions
-        public bool answerValue { get; set; }
-        public DateTime answerTime { get; set; } = DateTime.UtcNow;
+        public bool AnswerValue { get; set; }
+        public string AnswerTime { get; set; } = string.Empty;
     }
 }

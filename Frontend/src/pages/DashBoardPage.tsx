@@ -31,7 +31,7 @@ const DashboardPage: React.FC = () => {
                 <h3>Question Management</h3>
                 <p>Create, edit, and manage questions for users to answer.</p>
                 <button className="btn-primary" onClick={() => navigate('/admin/questions')}>
-                  Manage Questions
+                  Go to Questions!
                 </button>
               </div>
 
@@ -39,7 +39,7 @@ const DashboardPage: React.FC = () => {
                 <h3>User Responses</h3>
                 <p>View and analyze user responses to questions.</p>
                 <button className="btn-secondary" onClick={() => navigate('/admin/responses')}>
-                  View Responses
+                  Go to User Responses!
                 </button>
               </div>
 
@@ -47,7 +47,7 @@ const DashboardPage: React.FC = () => {
                 <h3>User Management</h3>
                 <p>Manage user accounts and permissions.</p>
                 <button className="btn-secondary" onClick={() => navigate('/admin/users')}>
-                  Manage Users
+                  Go to User Management!
                 </button>
               </div>
             </div>

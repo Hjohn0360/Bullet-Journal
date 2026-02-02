@@ -15,7 +15,7 @@ namespace Backend.bulletJournal.Models{
         public string QuestionText { get; set; } = string.Empty;
         public bool IsActive { get; set; } = true;
         public string CreatedBy { get; set; } = string.Empty;
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } 
+        public DateTime CreatedDate { get; set; } 
     }
 }

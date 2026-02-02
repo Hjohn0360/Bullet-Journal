@@ -14,12 +14,19 @@ namespace Backend.bulletJournal.Services{
         }
             public async Task<List<Question>> GetAsync() =>
                 await _question.Find(_ => true).ToListAsync();
+
             public async Task<Question?> GetAsync(string id) => 
                 await _question.Find(x => x.Id == id).FirstOrDefaultAsync();
-            public async Task CreateAsync(Question newQuestion) => 
+
+            public async Task CreateAsync(Question newQuestion){ 
+                newQuestion.CreatedDate = DateTime.UtcNow;
+                newQuestion.CreatedAt = DateTime.UtcNow;
                 await _question.InsertOneAsync(newQuestion);
+            }
+
             public async Task UpdateAsync(string id, Question updatedQuestion) =>
                 await _question.ReplaceOneAsync(x => x.Id == id, updatedQuestion);
+
             public async Task RemoveAsync(string id) =>
                 await _question.DeleteOneAsync(x => x.Id == id);
 

@@ -46,6 +46,10 @@ namespace Backend.bulletJournal.Controllers{
                 if(!isAdmin){
                     return Forbid("Only administrators can create questions.");
                 }
+
+                newQuestion.CreatedDate = DateTime.UtcNow;
+                newQuestion.CreatedAt = DateTime.UtcNow;
+                newQuestion.CreatedBy = currentUserId;
                 
                 await _questionService.CreateAsync(newQuestion);
                 return CreatedAtAction(nameof(Get), new { id = newQuestion.Id }, newQuestion);
